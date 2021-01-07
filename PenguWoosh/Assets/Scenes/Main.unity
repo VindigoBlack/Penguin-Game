@@ -296,6 +296,7 @@ MonoBehaviour:
   jumpForce: 15
   fallMultiplier: 1.5
   rb: {fileID: 936124386}
+  _animatorRef: {fileID: 1988560679}
   playerInput: 0
   grounded: 0
 --- !u!50 &936124386

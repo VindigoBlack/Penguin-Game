@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
 
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] Animator _animatorRef;
     
     private bool facingRight = true;
 
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerInput = Input.GetAxis("Horizontal");
+        _animatorRef.SetFloat("walking", Mathf.Abs(playerInput));
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
