@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpRightForce = 2f;
     [SerializeField] float fallMultiplier = 2f;
 
-
     [Header("References")]
 
     [SerializeField] Rigidbody2D rb;
@@ -44,8 +43,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Move Player and Flip Sprite
-        if (playerInput != 0)
+        //Move Player if Grounded and Flip Sprite
+        if (playerInput != 0 && grounded)
         {
             MovePlayer();
 
@@ -68,11 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        //Player only moves if Grounded
-        if (grounded)
-        {
-            rb.velocity = new Vector2(playerInput * playerSpeed * Time.fixedDeltaTime, rb.velocity.y);
-        }
+        rb.velocity = new Vector2(playerInput * playerSpeed * Time.fixedDeltaTime, rb.velocity.y);
     }
 
     private void Jump()
