@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Check if player is pressing A/D
         playerInput = Input.GetAxis("Horizontal");
 
         _animatorRef.SetFloat("walking", Mathf.Abs(playerInput));
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Move Player and Flip Sprite
         if (playerInput != 0)
         {
             MovePlayer();
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Add Fall Multiplier
         if (!grounded && rb.velocity.y < 0)
         {
             rb.velocity += Vector2.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
@@ -65,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
+        //Player only moves if Grounded
         if (grounded)
         {
             rb.velocity = new Vector2(playerInput * playerSpeed * Time.fixedDeltaTime, rb.velocity.y);
@@ -73,8 +77,9 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        //rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
+        // (OLD JUMP) rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
 
+        //add vertical and horizontal force when jumping depending on facing direction
         if (facingRight)
         {
             jumping = true;
@@ -95,6 +100,7 @@ public class PlayerController : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    //Check Triggers 
     private void OnTriggerStay2D(Collider2D collision)
     {
         grounded = true;
