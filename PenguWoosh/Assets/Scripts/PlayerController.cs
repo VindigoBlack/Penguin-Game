@@ -33,10 +33,13 @@ public class PlayerController : MonoBehaviour
         playerInput = Input.GetAxis("Horizontal");
 
         _animatorRef.SetFloat("walking", Mathf.Abs(playerInput));
+        _animatorRef.SetBool("grounded", grounded);
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
             Jump();
+            _animatorRef.SetTrigger("jumping");
+
         }
 
     }
