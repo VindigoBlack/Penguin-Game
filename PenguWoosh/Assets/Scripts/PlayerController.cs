@@ -33,13 +33,15 @@ public class PlayerController : MonoBehaviour
         playerInput = Input.GetAxis("Horizontal");
 
         _animatorRef.SetFloat("walking", Mathf.Abs(playerInput));
-        _animatorRef.SetBool("grounded", grounded);
 
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (Input.GetButtonDown("Jump"))
         {
-            Jump();
-            _animatorRef.SetTrigger("jumping");
+            jumping = true;
 
+            if (grounded)
+            {
+                Jump();
+            }
         }
 
     }
@@ -80,12 +82,10 @@ public class PlayerController : MonoBehaviour
         //add vertical and horizontal force when jumping depending on facing direction
         if (facingRight)
         {
-            jumping = true;
             rb.AddForce(new Vector2(jumpRightForce, jumpUpForce), ForceMode2D.Impulse);
         }
         else
         {
-            jumping = true;
             rb.AddForce(new Vector2(-jumpRightForce, jumpUpForce), ForceMode2D.Impulse);
         }
     }
@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         grounded = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         jumping = false;
     }
 
