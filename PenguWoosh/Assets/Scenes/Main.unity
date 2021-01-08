@@ -293,7 +293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 200
-  jumpForce: 15
+  jumpUpForce: 15
+  jumpRightForce: 10
   fallMultiplier: 1.5
   rb: {fileID: 936124386}
   _animatorRef: {fileID: 1988560679}

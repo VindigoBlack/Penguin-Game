@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
 
-    [SerializeField] float jumpForce = 10f;
+    [SerializeField] float jumpUpForce = 10f;
+    [SerializeField] float jumpRightForce = 2f;
     [SerializeField] float fallMultiplier = 2f;
 
 
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator _animatorRef;
     
     private bool facingRight = true;
+    public bool jumping = false;
 
 
     public float playerInput;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerInput = Input.GetAxis("Horizontal");
+
         _animatorRef.SetFloat("walking", Mathf.Abs(playerInput));
 
         if (Input.GetButtonDown("Jump") && grounded)
@@ -62,12 +65,26 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        rb.velocity = new Vector2(playerInput * playerSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        if (grounded)
+        {
+            rb.velocity = new Vector2(playerInput * playerSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        }
     }
 
     private void Jump()
     {
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        //rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
+
+        if (facingRight)
+        {
+            jumping = true;
+            rb.AddForce(new Vector2(jumpRightForce, jumpUpForce), ForceMode2D.Impulse);
+        }
+        else
+        {
+            jumping = true;
+            rb.AddForce(new Vector2(-jumpRightForce, jumpUpForce), ForceMode2D.Impulse);
+        }
     }
 
     private void FlipSprite()
@@ -81,6 +98,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         grounded = true;
+        jumping = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
